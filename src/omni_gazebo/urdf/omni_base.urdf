@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+<robot name="sirius">
+
+	<link name="base_link">
+		<visual>
+			<geometry>
+				<cylinder length="0.2" radius="0.30145"/>
+			</geometry>
+			<material name="red">
+				<color rgba="0.8 0 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.2" radius="0.30145"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<mass value="10"/>
+			<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		</inertial>
+	</link>
+
+	<link name="front_wheel">
+		<visual>
+			<origin rpy="0 1.57075 0" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.04" radius="0.06"/>
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0 1.57075 0" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.04" radius="0.06"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin rpy="0 1.57075 0" xyz="0 0 0"/>
+			<mass value="10"/>
+			<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		</inertial>
+	</link>
+	
+	<link name="left_wheel">
+		<visual>
+			<origin rpy="0 1.57 2.09" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.04" radius="0.06"/>
+			</geometry>
+			<material name="white">
+				<color rgba="1 1 1 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0 1.57 2.09" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.04" radius="0.06"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz="0 0 0"/>
+			<mass value="10"/>
+			<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		</inertial>
+	</link>
+	
+	<link name="right_wheel">
+		<visual>
+			<origin rpy="0 1.57 -2.09" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.04" radius="0.06"/>
+			</geometry>
+			<material name="blue">
+				<color rgba="0 0 0.8 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0 1.57 -2.09" xyz="0 0 0"/>
+			<geometry>
+				<cylinder length="0.03" radius="0.08"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz="0 0 0"/>
+			<mass value="10"/>
+			<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		</inertial>
+	</link>
+
+	<joint name="base_to_front_wheel" type="fixed">
+		<parent link="base_link"/>
+		<child link="front_wheel"/>
+		<origin rpy="0 0 0" xyz="0.24905 0 -0.08"/>
+	</joint>
+
+	<joint name="base_to_left_wheel" type="fixed">
+		<parent link="base_link"/>
+		<child link="left_wheel"/>
+		<origin rpy="0 0 0" xyz="-0.124525 0.21568 -0.08"/>
+	</joint>
+
+	<joint name="base_to_right_wheel" type="fixed">
+		<parent link="base_link"/>
+		<child link="right_wheel"/>
+		<origin rpy="0 0 0" xyz="-0.124525 -0.21568 -0.08"/>
+	</joint>
+
+</robot>
