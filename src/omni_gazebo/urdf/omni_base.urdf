@@ -22,7 +22,7 @@
 		</inertial>
 	</link>
 
-	<link name="front_wheel">
+	<link name="wheel_C">
 		<visual>
 			<origin rpy="0 1.57075 0" xyz="0 0 0"/>
 			<geometry>
@@ -45,7 +45,7 @@
 		</inertial>
 	</link>
 	
-	<link name="left_wheel">
+	<link name="wheel_A">
 		<visual>
 			<origin rpy="0 1.57 2.09" xyz="0 0 0"/>
 			<geometry>
@@ -68,7 +68,7 @@
 		</inertial>
 	</link>
 	
-	<link name="right_wheel">
+	<link name="wheel_B">
 		<visual>
 			<origin rpy="0 1.57 -2.09" xyz="0 0 0"/>
 			<geometry>
@@ -91,22 +91,22 @@
 		</inertial>
 	</link>
 
-	<joint name="base_to_front_wheel" type="fixed">
+	<joint name="base_to_wheel_C" type="fixed">
 		<parent link="base_link"/>
-		<child link="front_wheel"/>
-		<origin rpy="0 0 0" xyz="0.24905 0 -0.08"/>
+		<child link="wheel_C"/>
+		<origin rpy="0 0 0" xyz="-0.24905 0 -0.08"/>
 	</joint>
 
-	<joint name="base_to_left_wheel" type="fixed">
+	<joint name="base_to_wheel_A" type="fixed">
 		<parent link="base_link"/>
-		<child link="left_wheel"/>
-		<origin rpy="0 0 0" xyz="-0.124525 0.21568 -0.08"/>
+		<child link="wheel_A"/>
+		<origin rpy="0 0 0" xyz="0.124525 -0.21568 -0.08"/>
 	</joint>
 
-	<joint name="base_to_right_wheel" type="fixed">
+	<joint name="base_to_wheel_B" type="fixed">
 		<parent link="base_link"/>
-		<child link="right_wheel"/>
-		<origin rpy="0 0 0" xyz="-0.124525 -0.21568 -0.08"/>
+		<child link="wheel_B"/>
+		<origin rpy="0 0 0" xyz="0.124525 0.21568 -0.08"/>
 	</joint>
 
 </robot>
