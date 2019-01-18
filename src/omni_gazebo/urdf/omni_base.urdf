@@ -94,7 +94,7 @@
 	<joint name="base_to_wheel_C" type="fixed">
 		<parent link="base_link"/>
 		<child link="wheel_C"/>
-		<origin rpy="0 0 0" xyz="0.24905 0 -0.08"/>
+		<origin rpy="0 0 0" xyz="-0.24905 0 -0.08"/>
 	</joint>
 
 	<joint name="base_to_wheel_B" type="fixed">
