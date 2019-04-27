@@ -34,10 +34,7 @@ ROS three_omni是录制的调试产生的参数
 <br/>
 
     $cd 工作路径下
-  
-<br/>
-
-    $source 不要忘了source一下
+    $source devel/setup.bash
 
 <br/>
 启动ros主节点
