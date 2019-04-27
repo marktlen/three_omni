@@ -32,14 +32,15 @@ ROS three_omni是录制的调试产生的参数
 * omni_gazebo是车体的底盘仿真模型文件
 <br/>
 ## 快速进行车辆控制
-"$cd 工作路径下
 <br/>
-"$source 不要忘了source一下
+'$cd 工作路径下'
+<br/>
+'$source 不要忘了source一下'
 <br/>
 启动ros主节点
 <br/>
-"$roscore<br/>
+'$roscore'<br/>
 新建终端，启动底盘的tcp通信控制和里程计反馈的topic发布端<br/>
-"$python /ROS three_omni/1.13version.py<br/>
+'$python /ROS three_omni/1.13version.py'<br/>
 再新建一个，启动简单的键盘控制程序，测试是否成功与底盘通信<br/>
-"$python /ROS three_omni/robot_keyboard_teleop.py<br/>
+'$python /ROS three_omni/robot_keyboard_teleop.py'<br/>
