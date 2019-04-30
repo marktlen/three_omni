@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
-
-<robot name="sirius">
-
+    
+<robot name="rrbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<link name="base_link">
 		<visual>
 			<geometry>
 				<cylinder length="0.2" radius="0.30145"/>
 			</geometry>
 			<material name="red">
-				<color rgba="0.8 0 0 1"/>
+				<color rgba="0.8 0 0 0.5"/>
 			</material>
+			<gazebo reference="base_link">
+				<material>Gazebo/Red</material>
+			</gazebo>
 		</visual>
 		<collision>
 			<geometry>
@@ -31,6 +33,9 @@
 			<material name="black">
 				<color rgba="0 0 0 1"/>
 			</material>
+			<gazebo>
+				<material>Gazebo/Black</material>
+			</gazebo>
 		</visual>
 		<collision>
 			<origin rpy="0 1.57075 0" xyz="0 0 0"/>
@@ -54,6 +59,9 @@
 			<material name="white">
 				<color rgba="1 1 1 1"/>
 			</material>
+			<gazebo>
+				<material>Gazebo/White</material>
+			</gazebo>
 		</visual>
 		<collision>
 			<origin rpy="0 1.57 2.09" xyz="0 0 0"/>
@@ -77,6 +85,9 @@
 			<material name="blue">
 				<color rgba="0 0 0.8 1"/>
 			</material>
+			<gazebo>
+				<material>Gazebo/Blue</material>
+			</gazebo>
 		</visual>
 		<collision>
 			<origin rpy="0 1.57 -2.09" xyz="0 0 0"/>
@@ -108,5 +119,4 @@
 		<child link="wheel_A"/>
 		<origin rpy="0 0 0" xyz="0.124525 0.21568 -0.08"/>
 	</joint>
-
 </robot>
