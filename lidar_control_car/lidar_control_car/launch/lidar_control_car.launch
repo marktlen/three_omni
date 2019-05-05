@@ -1,0 +1,11 @@
+<launch>
+	<arg name="bag_filename" value="/home/ros/Desktop/lidar_control_car_ws/2019-05-01-19-00-02.bag" />
+	<param name="use_sim_time" value="false" />
+
+	<node name="decoder_node" pkg="velodyne_decoder" type="velodyne_decoder" output="screen"/>
+	<node name="control_node" pkg="lidar_control" type="lidar_control" output="screen"/>
+
+	<node name="display_node" pkg="rviz" type="rviz" args="-d $(find lidar_control_car)/rviz/rviz.rviz"/>
+	<!--node name="playbag" pkg="rosbag" type="play" args="-clock $(arg bag_filename) -r 1 -l" /--> 
+	<node name="base_footprint_to_velodyne_link" pkg="tf" type="static_transform_publisher" args="0 0 1.4 0 0 0 /base_footprint /velodyne 5"/>
+</launch>
