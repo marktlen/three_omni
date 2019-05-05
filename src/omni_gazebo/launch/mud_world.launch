@@ -1,0 +1,31 @@
+<launch>
+         <!--We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+                <!--<arg name="world_name" value="$(find omni_gazebo)/world/myrobot.world"/>-->
+                 <!--Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+                <!--<arg name="paused" value="false"/>
+                <arg name="use_sim_time" value="true"/>
+                <arg name="gui" value="true"/>
+                <arg name="headless" value="false"/>
+                <arg name="debug" value="false"/> -->
+        </include>
+
+        <!--build the model in rviz to test-->
+        <arg name="model" default="$(find omni_gazebo)/urdf/omni_base.urdf"/>
+        <arg name="gui" default="true"/>
+
+        <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)"/>
+        <param name="use_gui" value="$(arg gui)"/>
+
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+                <param name="publisher_frequency" type="double" value="20.0"/>
+        </node>
+
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_urdf" args="-file $(find omni_gazebo)/urdf/omni_base.urdf -urdf -z 1 -model omni_base"/>
+
+        <!--run under follew if you want to cheek model in rviz-->
+        <!--<node name="rviz" pkg="rviz" type="rviz" required="true"/>-->
+</launch>
