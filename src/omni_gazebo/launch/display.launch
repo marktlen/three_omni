@@ -12,5 +12,5 @@
                 <param name="publisher_frequency" type="double" value="20.0"/>
         </node>
 
-        <node name="rviz" pkg="rviz" type="rviz" required="true"/>
+        <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find omni_gazebo)/rviz/display.rviz"/>
 </launch>
