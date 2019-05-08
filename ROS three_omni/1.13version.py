@@ -191,7 +191,7 @@ class BaseController():
                     Encoder1_diff = Encoder1 - self.last_Encoder1
                     self.last_Encoder1 = Encoder1
                     Encoder2_diff = Encoder2 - self.last_Encoder2
-                    self.last_Encoder1 = Encoder1                    
+                    self.last_Encoder2 = Encoder2                    
                     Encoder3_diff = Encoder3 - self.last_Encoder3
                     self.last_Encoder3 = Encoder3
                     
