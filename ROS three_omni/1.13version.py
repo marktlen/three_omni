@@ -42,46 +42,46 @@ class BaseController():
 
                 self.vx = 0
                 self.vy = 0
-                self.vth = 0  
- 
+                self.vth = 0
+
                 self.current_time = rospy.get_time()
                 self.last_time = rospy.get_time()
                 self.last_Encoder1 = 0 #编码器1（A）的self.last_time时刻读数
                 self.last_Encoder2 = 0 #编码器2（B）的self.last_time时刻读数
                 self.last_Encoder3 = 0 #编码器3（C）的self.last_time时刻读数
-                
-                
 
-                
-                print rospy.get_time()		
-		
-                thread2 = threading.Thread(target = self.thread02)  
+
+
+
+                #print rospy.get_time()
+
+                thread2 = threading.Thread(target = self.thread02)
                 thread2.setDaemon(True)
-                thread2.start()  
-                thread1 = threading.Thread(target = self.thread01)  
+                thread2.start()
+                thread1 = threading.Thread(target = self.thread01)
                 thread1.setDaemon(True)
-                thread1.start()  	
-                
-                rospy.spin()			
+                thread1.start()
 
-		
+                rospy.spin()
+
+
 
 
         #定义第一个线程
         def thread01(self):
         	#订阅/cmd_vel话题
         	rospy.Subscriber('/cmd_vel', Twist, self.callback,queue_size=1,buff_size=5242800)
-		
+
 
         #定义第一个线程
         def thread02(self):
             #从串口接收编码器信息并发布
             #while not rospy.is_shutdown():
-            r = rospy.Rate(25)
-            while  1:                	
-                #self.talker3()    
+            # r = rospy.Rate(25)
+            while  1:
+                #self.talker3()
 		self.talker()
-		r.sleep()
+		# r.sleep()
 
         #定义回调函数
         def callback(self, move_cmd):
@@ -90,32 +90,32 @@ class BaseController():
         	MinSpeed=-0.55  #m/s
 
 
-        	#停止
-    	        s = [0x5a,0x66,0x07,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x01]
-    	        #前进
-    	        f = [0x5a,0x66,0x07,0x01,0xfe,0x0c,0x01,0xf4,0x00,0x00,0x06]
-    	        
-    	        #左转
-    	        tl = [0x5a,0x66,0x07,0x01,0x01,0xf4,0x01,0xf4,0x01,0xf4,0xf4]
-    	        tr = [0x5a,0x66,0x07,0x01,0xfe,0x0c,0xfe,0x0c,0xfe,0x0c,0xf3]
+        	# #停止
+    	        # s = [0x5a,0x66,0x07,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x01]
+    	        # #前进
+    	        # f = [0x5a,0x66,0x07,0x01,0xfe,0x0c,0x01,0xf4,0x00,0x00,0x06]
+
+    	        # #左转
+    	        # tl = [0x5a,0x66,0x07,0x01,0x01,0xf4,0x01,0xf4,0x01,0xf4,0xf4]
+    	        # tr = [0x5a,0x66,0x07,0x01,0xfe,0x0c,0xfe,0x0c,0xfe,0x0c,0xf3]
 
 
-    	        #后退
-    	        b = [0x5a,0x66,0x07,0x01,0x01,0xf4,0xfe,0x0c,0x00,0x00,0x06]
+    	        # #后退
+    	        # b = [0x5a,0x66,0x07,0x01,0x01,0xf4,0xfe,0x0c,0x00,0x00,0x06]
 
     	        #anyspeed
     	        asp = [0x5a,0x66,0x07,0x01,0x01,0xf4,0xfe,0x0c,0x00,0x00,0x06]
-    	        
 
 
-        	L = self.L # 
+
+        	L = self.L #
         	r = self.radius #    0.06325
         	angle = math.pi / 6
         	sina = 0.5 #math.sin(angle)
         	cosa = math.cos(angle)
 
         	vx = move_cmd.linear.x
-        	
+
         	vy = move_cmd.linear.y
 
         	w=move_cmd.angular.z
@@ -123,13 +123,13 @@ class BaseController():
         	wtheta1 = (sina * vy - cosa * vx + w * L) / r    #-0.17 when pub x=0.2,y=0,z=0
         	wtheta2 = (sina * vy + cosa * vx + w * L) / r    #-0.17 when pub x=0.2,y=0,z=0
         	wtheta3 = (-vy + w * L) / r
-        	
+
         	rads18000 = 83 * 2 * math.pi / 60 #8.691739674931762 rad/s  设置为18000对应的轮子角速度
-        	
+
         	k1 = int(wtheta1 * 18000 / rads18000) #速度wtheta1对应的设置值
         	k2 = int(wtheta2 * 18000 / rads18000)
         	k3 = int(wtheta3 * 18000 / rads18000)
-        	
+
         	if k1 > 18000:
         	    k1 = 18000
 	        if k1 < -18000:
@@ -142,8 +142,8 @@ class BaseController():
         	    k3 = 18000
 	        if k3 < -18000:
 	            k3 = -18000
-	            
-	            
+
+
 	        asp[4]=(k1>>8)&0xFF#vlint1
 	        asp[5]=k1 & 0xFF
 
@@ -152,25 +152,25 @@ class BaseController():
 
 	        asp[8]=(k3>>8)&0xFF#vlint2
 	        asp[9]=k3 & 0xFF
-	        
+
 	        asp[10]=asp[3]^asp[4]^asp[5]^asp[6]^asp[7]^asp[8]^asp[9]
 
 
-	        print repr(asp)
-	        for i in range(0,11):
-	            print('%x'%asp[i])
-	        data = struct.pack("%dB"%(len),*asp)	        
+	        # print repr(asp)
+	        # for i in range(0,11):
+	        #     print('%x'%asp[i])
+	        data = struct.pack("%dB"%(len),*asp)
 	        self.sock.send(data)
 
-		
+
         def talker(self):
                 #hello_str = "hello world %s" % rospy.get_time()
                 #rospy.loginfo(hello_str)
                 #pub.publish(hello_str)
                 #print self.sock.recv(1024)
-              
+
                 len1=17
-                
+
                 buf = self.sock.recv(1024)
                 if buf:
                     #data17 = repr(buf)
@@ -181,20 +181,20 @@ class BaseController():
                     timer = rospy.get_time()
                     print(self.current_time)
                     dt = self.current_time - self.last_time
-                    self.last_time = self.current_time 
+                    self.last_time = self.current_time
                     #合法性判断todo （1）长度为17个字节，（2） data[16] 为data[3]~data[15]的异或
                     #合法则进行下面的工作
-                    
+
                     h0,h1,len2,uid,Encoder1,Encoder2,Encoder3,checksum=struct.unpack("!4c3ic",buf)
                     #记录编码器数据的增减
-                    
+
                     Encoder1_diff = Encoder1 - self.last_Encoder1
                     self.last_Encoder1 = Encoder1
                     Encoder2_diff = Encoder2 - self.last_Encoder2
-                    self.last_Encoder2 = Encoder2                    
+                    self.last_Encoder2 = Encoder2
                     Encoder3_diff = Encoder3 - self.last_Encoder3
                     self.last_Encoder3 = Encoder3
-                    
+
                     #根据编码器读数转换为角速度 wtheta1，wtheta2，wtheta3
                     Ticks = 1224 #厂家提供实测一圈（2×math.pi弧度）对应的编码器点数
                     wrad1 = math.pi * 2 * Encoder1_diff / Ticks #Encoder1_diff点数对应的弧度数
@@ -203,7 +203,7 @@ class BaseController():
                     wtheta1 = wrad1 / dt #角速度,rad/s
                     wtheta2 = wrad2 / dt #角速度,rad/s
                     wtheta3 = wrad3 / dt #角速度,rad/s
-                    
+
                     #转化为vx,vy,vth
                     angle = math.pi / 6
                     sina = 0.5 #math.sin(angle)
@@ -221,7 +221,7 @@ class BaseController():
                     if (self.vth != 0):
                         delta_th = self.vth * dt
                         self.th = self.th + delta_th
-                        
+
                     # publish the odom information
                     quaternion = Quaternion()
                     quaternion.x = 0.0
@@ -253,20 +253,20 @@ class BaseController():
                     #     tf.transformations.quaternion_from_euler(0, 0, self.th),
                     #     rospy.Time.now(),
                     #     "base_link",
-                    #     "odom") 
+                    #     "odom")
                     #self.tf_listener = tf.TransformListener()
                     #if self.tf_listener.waitForTransform(self.odom_frame_id, self.base_frame_id, rospy.Time(0),rospy.Duration(5.0)):
-                        #print ("1")                 
+                        #print ("1")
                     self.rate.sleep()
-   
-       
+
+
                 #hello_str = "hello world %s" % rospy.get_time()
                 #rospy.loginfo(hello_str)
                 #pub.publish(hello_str)
-                    
 
 
-		
+
+
 
 if __name__ == '__main__':
 	BaseController()
