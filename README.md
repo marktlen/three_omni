@@ -48,7 +48,6 @@ ROS three_omni是录制的调试产生的参数
 
     $python /src/omni_gazebo/src/robot_keyboard_teleop.py
     
-<br/>
 ## 进行简单的slam_gmapping建图定位
 <br/>
 请在工作空间下安装[rplidar_ros](https://github.com/robopeak/rplidar_ros)包
