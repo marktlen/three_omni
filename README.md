@@ -38,22 +38,46 @@ ROS three_omni是录制的调试产生的参数
     $cd 工作路径下
     $source devel/setup.bash
 
-<br/>
-启动ros主节点
-<br/>
-
-
-    $roscore
-  
-  
-<br/>
+<br/>  
 新建终端，启动底盘的tcp通信控制和里程计反馈的topic发布端<br/>
 
-    $python /ROS three_omni/1.13version.py
+    $python /src/omni_gazebo/src1.13version.py
    
 <br/>
 再新建一个，启动简单的键盘控制程序，测试是否成功与底盘通信<br/>
 
-    $python /ROS three_omni/robot_keyboard_teleop.py
+    $python /src/omni_gazebo/src/robot_keyboard_teleop.py
     
+<br/>
+## 进行简单的slam_gmapping建图定位
+<br/>
+请在工作空间下安装[rplidar_ros](https://github.com/robopeak/rplidar_ros)包
+<br/>
+
+    $git clone https://github.com/robopeak/rplidar_ros.git
+
+<br/>
+安装完成后，将包里面的src/node.cpp中的修改为车体半径(0.59)
+<br/>
+
+    78 scan_msg.range_min = 0.59;
+
+<br/>
+完成后请重新编译工作空间,现在可以启动slam_gmapping了
+<br/>
+
+    $roslaunch omni_gazebo robot_slam_gmapping.launch
+
+<br/>
+启动底盘驱动
+<br/>
+
+    $python /src/omni_gazebo/src1.13version.py
+
+<br/>
+建议使用新的键盘控制文件,保证建图效果,注意：点击键盘后小车会一直执行这个命令，一定要用"k"键停止!!
+<br/>
+
+    $python /src/omni_gazebo/src/keyboard_teleop_onestep.py
+
 <br/>
