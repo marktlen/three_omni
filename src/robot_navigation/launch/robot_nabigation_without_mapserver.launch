@@ -1,0 +1,27 @@
+<launch>
+        <arg name="model" default="$(find omni_gazebo)/urdf/omni_base.urdf"/>
+        <arg name="gui" default="true"/>
+
+
+        <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)"/>
+        <param name="use_gui" value="$(arg gui)"/>
+        
+        <!--robot info-->
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+                <param name="publisher_frequency" type="double" value="20.0"/>
+        </node>
+
+        <!--start rplidar-laser-->
+        <include file="$(find omni_gazebo)/launch/rplidar-laser.launch"/>
+
+        <!--gmapping-->
+        <include file="$(find omni_gazebo)/launch/include/robot_gmapping.launch.xml"/>
+
+        <!--Move base-->
+        <include file="$(find robot_navigation)/launch/include/move_base.launch.xml"/>
+
+        <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find omni_gazebo)/rviz/display.rviz"/>
+</launch>
