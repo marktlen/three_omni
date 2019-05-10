@@ -53,7 +53,7 @@ class BaseController():
                 
 
                 
-                print rospy.get_time()		
+                # print rospy.get_time()		
 		
                 thread2 = threading.Thread(target = self.thread02)  
                 thread2.setDaemon(True)
@@ -157,8 +157,8 @@ class BaseController():
 
 
 	        print repr(asp)
-	        for i in range(0,11):
-	            print('%x'%asp[i])
+	        # for i in range(0,11):
+	        #     print('%x'%asp[i])
 	        data = struct.pack("%dB"%(len),*asp)	        
 	        self.sock.send(data)
 
@@ -248,7 +248,7 @@ class BaseController():
                     odom.twist.twist.linear.y = self.vy
                     odom.twist.twist.angular.z = self.vth
                     self.odom_pub.publish(odom)
-                    print(dt)
+                    # print(dt)
                     #self.odom_broadcaster.sendTransform((self.x, self.y, 0),
                     #     tf.transformations.quaternion_from_euler(0, 0, self.th),
                     #     rospy.Time.now(),
