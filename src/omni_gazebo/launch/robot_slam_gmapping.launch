@@ -21,7 +21,7 @@
         <include file="$(find omni_gazebo)/launch/include/robot_gmapping.launch.xml"/>
 
         <!--Map server-->
-        <arg name="map_server" pkg="map_server" type="map_server">
+        <!--<arg name="map_server" pkg="map_server" type="map_server"> -->
 
         <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find omni_gazebo)/rviz/display.rviz"/>
 </launch>
